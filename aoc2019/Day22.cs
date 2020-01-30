@@ -19,6 +19,41 @@ namespace aoc2019
         {
         }
 
+        public void Test()
+        {
+            for (int i = 0; i < deckSize; i++)
+            {
+                deck.Add(i);
+            }
+
+            var lines = InputUtils.GetDayInputLines(22);
+
+            for (int i = 0; i < 10000; i++)
+            {
+
+                foreach (string line in lines)
+                {
+                    if (line.StartsWith("deal into new", StringComparison.Ordinal))
+                    {
+                        DealIntoNewStack();
+                    }
+                    else if (line.StartsWith("deal with increment", StringComparison.Ordinal))
+                    {
+                        int increment = int.Parse(line.Trim().Split(' ')[3]);
+                        DealWithIncrement(increment);
+                    }
+                    else
+                    {
+                        // cut
+                        int cutValue = int.Parse(line.Trim().Split(' ')[1]);
+                        Cut(cutValue);
+                    }
+                }
+
+                Console.WriteLine(deck[0]);
+            }
+        }
+
         public int Part1()
         {
             for (int i = 0; i < deckSize; i++)
@@ -60,7 +95,7 @@ namespace aoc2019
 
         public long Part2()
         {
-            string[] lines = File.ReadAllLines("/Users/jjacoby/testing/advent2019/day22.txt");
+            var lines = InputUtils.GetDayInputLines(22);
 
             var ops = lines.Select(p => Shuffler.Parse(p, bigDeckSize));
             var agg = ops.Aggregate((a, b) => a.Merge(b));
@@ -70,32 +105,6 @@ namespace aoc2019
             var app = inv.Apply(2020);
 
             return app;
-        }
-
-        public void Go(string[] args)
-        {
-
-          
-
-            //bool factoryState = true;
-            //// check if it goes back to factory state
-            //for (int i = 0; i < deckSize; i++)
-            //{
-            //    if (deck[i] != i)
-            //    {
-            //        factoryState = false;
-            //        break;
-            //    }
-            //}
-
-            //if(factoryState)
-            //{
-            //    Console.WriteLine(iteration);
-            //}
-
-
-            // repeats every 5003rd iteration
-
         }
 
         void DealIntoNewStack()

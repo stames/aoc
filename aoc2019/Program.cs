@@ -6,7 +6,9 @@ namespace aoc2019
     {
         static void Main(string[] args)
         {
-            var day = new Day22();
+            var day = new Day24();
+
+            //day.Test();
 
             long part1 = day.Part1();
             Console.WriteLine("Part 1: {0}", part1);
